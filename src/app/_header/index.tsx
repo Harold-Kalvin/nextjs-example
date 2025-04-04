@@ -2,15 +2,16 @@
 
 import Link from "next/link";
 import useUser from "hooks/use_user";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { logout } from "lib/auth";
 
 export default function Header() {
   const user = useUser();
+  const router = useRouter();
 
   const handleLogout = async () => {
     await logout();
-    redirect("/");
+    router.push("/");
   };
 
   return (

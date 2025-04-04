@@ -1,17 +1,19 @@
 "use client";
 
 import { login } from "lib/auth";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useActionState } from "react";
 
 export default function LoginForm() {
+  const router = useRouter();
+
   const [data, submitAction, isPending] = useActionState(async (_: unknown, formData: FormData) => {
     const response = await login(
       formData.get("email") as string,
       formData.get("password") as string
     );
     if (response.status === 200) {
-      redirect("/");
+      router.push("/");
     }
     if (response.status === 400) {
       return { errors: response.errors };
