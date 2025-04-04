@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@tanstack/react-query": "^5.71.5",
     "next": "^15.2.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "zod": "^3.24.2"
   },
   "scripts": {
     "dev": "next dev",
@@ -16,6 +18,7 @@
     "checks": "npm run format && npm run lint"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.71.5",
     "@types/node": "22.13.14",
     "@types/react": "19.0.12",
     "eslint": "9.23.0",
