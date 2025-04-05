@@ -1,29 +1,21 @@
 "use client";
 
-import { login } from "lib/auth";
+import { verifyEmail } from "lib/auth";
 import { useRouter } from "next/navigation";
 import { useActionState } from "react";
 
-export default function LoginForm() {
+export default function VerifyEmail() {
   const router = useRouter();
-
   const [data, submitAction, isPending] = useActionState(async (_: unknown, formData: FormData) => {
-    const response = await login(
-      formData.get("email") as string,
-      formData.get("password") as string
-    );
+    const response = await verifyEmail(formData.get("code") as string);
     if (response.status === 200) {
       router.push("/");
     }
     if (response.status === 400) {
       return { errors: response.errors };
     }
-    // pending email verification
-    if (response.status === 401) {
-      router.push("/signup/verify-email");
-    }
     if (response.status === 409) {
-      return { errors: [{ message: "Already authenticated" }] };
+      return { errors: [{ message: "Code has expired or email was already verified" }] };
     }
     return null;
   }, null);
@@ -31,15 +23,11 @@ export default function LoginForm() {
   return (
     <form action={submitAction}>
       <div>
-        <label htmlFor="email">email</label>
-        <input id="email" type="text" name="email" />
-      </div>
-      <div>
-        <label htmlFor="password">password</label>
-        <input id="password" type="password" name="password" />
+        <label htmlFor="code">code</label>
+        <input id="code" type="text" name="code" />
       </div>
       <button type="submit" disabled={isPending}>
-        Login
+        Submit
       </button>
       {data?.errors &&
         data.errors.map((error: Record<string, string>) => (
