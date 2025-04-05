@@ -25,3 +25,25 @@ export async function logout() {
   await request("DELETE", "http://localhost:8000/auth/browser/v1/auth/session");
   document.dispatchEvent(new CustomEvent("auth.changed"));
 }
+
+export async function signup(email: string, password: string) {
+  const response = await request("POST", "http://localhost:8000/auth/browser/v1/auth/signup", {
+    email: email,
+    password: password,
+  });
+  return response;
+}
+
+export async function verifyEmail(key: string) {
+  const response = await request(
+    "POST",
+    "http://localhost:8000/auth/browser/v1/auth/email/verify",
+    {
+      key: key,
+    }
+  );
+  if (response.status === 200) {
+    document.dispatchEvent(new CustomEvent("auth.changed"));
+  }
+  return response;
+}

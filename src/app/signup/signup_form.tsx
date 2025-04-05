@@ -1,14 +1,14 @@
 "use client";
 
-import { login } from "lib/auth";
+import { signup } from "lib/auth";
 import { useRouter } from "next/navigation";
 import { useActionState } from "react";
 
-export default function LoginForm() {
+export default function SignupForm() {
   const router = useRouter();
 
   const [data, submitAction, isPending] = useActionState(async (_: unknown, formData: FormData) => {
-    const response = await login(
+    const response = await signup(
       formData.get("email") as string,
       formData.get("password") as string
     );
@@ -38,8 +38,12 @@ export default function LoginForm() {
         <label htmlFor="password">password</label>
         <input id="password" type="password" name="password" />
       </div>
+      <div>
+        <label htmlFor="confirm-password">confirm password</label>
+        <input id="confirm-password" type="password" name="confirm-password" />
+      </div>
       <button type="submit" disabled={isPending}>
-        Login
+        Sign up
       </button>
       {data?.errors &&
         data.errors.map((error: Record<string, string>) => (
