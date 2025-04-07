@@ -47,3 +47,29 @@ export async function verifyEmail(key: string) {
   }
   return response;
 }
+
+export async function requestPasswordReset(email: string) {
+  const response = await request(
+    "POST",
+    "http://localhost:8000/auth/browser/v1/auth/password/request",
+    {
+      email: email,
+    }
+  );
+  return response;
+}
+
+export async function resetPassword(key: string, password: string) {
+  const response = await request(
+    "POST",
+    "http://localhost:8000/auth/browser/v1/auth/password/reset",
+    {
+      key: key,
+      password: password,
+    }
+  );
+  if (response.status === 200) {
+    document.dispatchEvent(new CustomEvent("auth.changed"));
+  }
+  return response;
+}
