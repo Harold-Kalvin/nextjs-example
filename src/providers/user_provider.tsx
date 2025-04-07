@@ -44,5 +44,7 @@ export function UserProvider(props: { children: ReactNode }) {
     return <div>Error loading session</div>;
   }
 
+  // if not user, remove related cookie
+
   return <UserContext.Provider value={user}>{props.children}</UserContext.Provider>;
 }
