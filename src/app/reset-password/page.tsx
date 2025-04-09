@@ -1,3 +1,4 @@
+import AnonymousRoute from "components/routing/anonymous_route";
 import ResetPasswordForm from "./reset_password_form";
 
 export const metadata = {
@@ -6,9 +7,9 @@ export const metadata = {
 
 export default function Page() {
   return (
-    <>
+    <AnonymousRoute>
       <h1>Reset password page!</h1>
       <ResetPasswordForm />
-    </>
+    </AnonymousRoute>
   );
 }
