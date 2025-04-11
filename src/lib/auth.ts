@@ -21,6 +21,25 @@ export async function login(email: string, password: string) {
   return response;
 }
 
+export async function loginGoogle(clientId: string, token: string) {
+  const response = await request(
+    "POST",
+    "http://localhost:8000/auth/browser/v1/auth/provider/token",
+    {
+      provider: "google",
+      process: "login",
+      token: {
+        client_id: clientId,
+        id_token: token,
+      },
+    }
+  );
+  if (response.status === 200) {
+    document.dispatchEvent(new CustomEvent("auth.changed"));
+  }
+  return response;
+}
+
 export async function logout() {
   await request("DELETE", "http://localhost:8000/auth/browser/v1/auth/session");
   document.dispatchEvent(new CustomEvent("auth.changed"));
