@@ -3,6 +3,8 @@ import QueryProvider from "providers/query_client_provider";
 import { UserProvider } from "providers/user_provider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
+import "./globals.css";
+
 export const metadata = {
   title: "Site example",
   description: "Some description",
