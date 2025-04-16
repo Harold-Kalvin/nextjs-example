@@ -20,17 +20,36 @@ export default function RequestPasswordResetForm() {
   }, null);
 
   return (
-    <form action={submitAction}>
+    <form
+      action={submitAction}
+      className="mx-auto max-w-md space-y-6 rounded-lg bg-white p-6 shadow-md"
+    >
       <div>
-        <label htmlFor="email">email</label>
-        <input id="email" type="text" name="email" />
+        <label htmlFor="email" className="mb-1 block text-sm font-medium text-gray-700">
+          Email
+        </label>
+        <input
+          id="email"
+          type="text"
+          name="email"
+          required
+          className="w-full rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
       </div>
-      <button type="submit" disabled={isPending}>
-        Submit
+
+      <button
+        type="submit"
+        disabled={isPending}
+        className="w-full rounded-md bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700 disabled:opacity-50"
+      >
+        {isPending ? "Submitting..." : "Submit"}
       </button>
+
       {data?.errors &&
         data.errors.map((error: Record<string, string>) => (
-          <p key={error.message}>{error.message}</p>
+          <p key={error.message} className="text-sm text-red-600">
+            {error.message}
+          </p>
         ))}
     </form>
   );

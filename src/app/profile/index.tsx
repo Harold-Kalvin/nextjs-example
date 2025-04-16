@@ -8,8 +8,8 @@ export default function Profile() {
   return (
     <>
       {user && (
-        <p>
-          Hello <b>{user.username}</b>
+        <p className="text-lg text-gray-800">
+          Hello <span className="font-semibold">{user.username}</span>
         </p>
       )}
     </>
