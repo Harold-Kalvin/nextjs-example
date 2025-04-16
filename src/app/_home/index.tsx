@@ -8,8 +8,8 @@ export default function Home() {
   return (
     <>
       {user && (
-        <p>
-          Hello <b>{user.username}</b>
+        <p className="text-lg">
+          Hello <span className="font-semibold">{user.username}</span>
         </p>
       )}
     </>
