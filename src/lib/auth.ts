@@ -2,7 +2,10 @@ import { User, UserSchema } from "types/auth";
 import { request } from "utils/request";
 
 export async function getUser(): Promise<User | null> {
-  const response = await request("GET", "http://localhost:8000/auth/browser/v1/auth/session");
+  const response = await request(
+    "GET",
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/browser/v1/auth/session`
+  );
   if (response.status === 200) {
     UserSchema.parse(response.data.user);
     return response.data.user;
@@ -11,10 +14,14 @@ export async function getUser(): Promise<User | null> {
 }
 
 export async function login(email: string, password: string) {
-  const response = await request("POST", "http://localhost:8000/auth/browser/v1/auth/login", {
-    email: email,
-    password: password,
-  });
+  const response = await request(
+    "POST",
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/browser/v1/auth/login`,
+    {
+      email: email,
+      password: password,
+    }
+  );
   if (response.status === 200) {
     document.dispatchEvent(new CustomEvent("auth.changed"));
   }
@@ -24,7 +31,7 @@ export async function login(email: string, password: string) {
 export async function loginGoogle(clientId: string, token: string) {
   const response = await request(
     "POST",
-    "http://localhost:8000/auth/browser/v1/auth/provider/token",
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/browser/v1/auth/provider/token`,
     {
       provider: "google",
       process: "login",
@@ -41,22 +48,26 @@ export async function loginGoogle(clientId: string, token: string) {
 }
 
 export async function logout() {
-  await request("DELETE", "http://localhost:8000/auth/browser/v1/auth/session");
+  await request("DELETE", `${process.env.NEXT_PUBLIC_API_BASE_URL}/browser/v1/auth/session`);
   document.dispatchEvent(new CustomEvent("auth.changed"));
 }
 
 export async function signup(email: string, password: string) {
-  const response = await request("POST", "http://localhost:8000/auth/browser/v1/auth/signup", {
-    email: email,
-    password: password,
-  });
+  const response = await request(
+    "POST",
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/browser/v1/auth/signup`,
+    {
+      email: email,
+      password: password,
+    }
+  );
   return response;
 }
 
 export async function verifyEmail(key: string) {
   const response = await request(
     "POST",
-    "http://localhost:8000/auth/browser/v1/auth/email/verify",
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/browser/v1/auth/email/verify`,
     {
       key: key,
     }
@@ -70,7 +81,7 @@ export async function verifyEmail(key: string) {
 export async function requestPasswordReset(email: string) {
   const response = await request(
     "POST",
-    "http://localhost:8000/auth/browser/v1/auth/password/request",
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/browser/v1/auth/password/request`,
     {
       email: email,
     }
@@ -81,7 +92,7 @@ export async function requestPasswordReset(email: string) {
 export async function resetPassword(key: string, password: string) {
   const response = await request(
     "POST",
-    "http://localhost:8000/auth/browser/v1/auth/password/reset",
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/browser/v1/auth/password/reset`,
     {
       key: key,
       password: password,
